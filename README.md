@@ -6,9 +6,9 @@
 - [x] Scaffold basic ui with mock data
 - [x] Tidy up build process
 - [x] Setup DB (vercel postgres)
-  - [ ] Adjust tables to fit the app
-    - [ ] Fix relationships between entities (one to one, one to many, many to many)
-    - [ ] Add constraints (not null, unique, foreign key)
+  - [x] Adjust tables to fit the app
+    - [x] Fix relationships between entities (one to one, one to many, many to many)
+    - [x] Add constraints (not null, unique, foreign key)
 - [ ] Attach DB to UI
 - [ ] Add Authentication (w/ Clerk)
 - [ ] Add Image Upload
@@ -89,7 +89,21 @@
   - vote (upvote/downvote)
 
 - Visiblity (Enum)
+
   - Public
   - Private
   - Hidden
   - Archived
+
+- Flair
+
+  - Id
+  - ThreadId
+  - Name
+  - Color
+  - Description
+
+- PostFlairs
+  - Id
+  - PostId
+  - FlairId

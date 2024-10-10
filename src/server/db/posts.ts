@@ -7,6 +7,7 @@ import {
   integer,
   pgEnum,
   pgTableCreator,
+  primaryKey,
   serial,
   timestamp,
   varchar,
@@ -36,13 +37,33 @@ export const threads = createTable("threads", {
   createdAt: timestamp("created_at", { withTimezone: true })
     .default(sql`CURRENT_TIMESTAMP`)
     .notNull(),
-  createdBy: serial("created_by").notNull(),
 });
+
+export const flairs = createTable("flairs", {
+  id: serial("flair_id").primaryKey(),
+  threadId: serial("thread_id").references(() => threads.id),
+  name: varchar("name", { length: 20 }).notNull(),
+  color: varchar("color", { length: 7 }).notNull(),
+  description: varchar("description", { length: 100 }),
+});
+
+export const postFlairs = createTable(
+  "post_flairs",
+  {
+    postId: serial("post_id").references(() => posts.id),
+    flairId: serial("flair_id").references(() => flairs.id),
+  },
+  (table) => {
+    return {
+      pk: primaryKey({ columns: [table.postId, table.flairId] }),
+    };
+  },
+);
 
 export const users = createTable("users", {
   id: serial("user_id").primaryKey(),
   username: varchar("username", { length: 16 }).notNull(),
-  email: varchar("email", { length: 256 }).notNull(),
+  email: varchar("email", { length: 80 }).unique().notNull(),
   password: varchar("password", { length: 32 }).notNull(),
   createdAt: timestamp("created_at", { withTimezone: true })
     .default(sql`CURRENT_TIMESTAMP`)
@@ -122,7 +143,7 @@ export const commentVotes = createTable("comment_votes", {
   vote: integer("vote").notNull(),
 });
 
-export const postRelations = relations(posts, ({ one }) => ({
+export const postRelations = relations(posts, ({ one, many }) => ({
   author: one(users, {
     fields: [posts.authorId],
     references: [users.id],
@@ -131,12 +152,31 @@ export const postRelations = relations(posts, ({ one }) => ({
     fields: [posts.threadId],
     references: [threads.id],
   }),
+  flairs: many(postFlairs),
+}));
+
+export const postFlairsRelations = relations(postFlairs, ({ one }) => ({
+  post: one(posts, {
+    fields: [postFlairs.postId],
+    references: [posts.id],
+  }),
+  flair: one(flairs, {
+    fields: [postFlairs.flairId],
+    references: [flairs.id],
+  }),
 }));
 
 export const commentRelations = relations(comments, ({ one }) => ({
   parentComment: one(comments, {
     fields: [comments.parentCommentId],
     references: [comments.id],
+  }),
+}));
+
+export const flairRelations = relations(flairs, ({ one }) => ({
+  thread: one(threads, {
+    fields: [flairs.threadId],
+    references: [threads.id],
   }),
 }));
 
@@ -148,6 +188,7 @@ export const userRelations = relations(users, ({ many }) => ({
 export const threadRelations = relations(threads, ({ many }) => ({
   threadMembers: many(threadMembers),
   posts: many(posts),
+  flairs: many(flairs),
 }));
 
 export const threadMemberRelations = relations(threadMembers, ({ one }) => ({
