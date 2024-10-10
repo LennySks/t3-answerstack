@@ -1,7 +1,7 @@
 // Example model schema from the Drizzle docs
 // https://orm.drizzle.team/docs/sql-schema-declaration
 
-import { sql } from "drizzle-orm";
+import { relations, sql } from "drizzle-orm";
 import {
   index,
   integer,
@@ -27,11 +27,44 @@ export const threadVisibilityEnum = pgEnum("thread_visibility", [
   "archived",
 ]);
 
+export const threads = createTable("threads", {
+  id: serial("thread_id").primaryKey(),
+  name: varchar("name", { length: 20 }).notNull(),
+  description: varchar("description", { length: 500 }).notNull(),
+  image: varchar("thread_image", { length: 1024 }),
+  banner: varchar("thread_banner", { length: 1024 }),
+  createdAt: timestamp("created_at", { withTimezone: true })
+    .default(sql`CURRENT_TIMESTAMP`)
+    .notNull(),
+  createdBy: serial("created_by").notNull(),
+});
+
+export const users = createTable("users", {
+  id: serial("user_id").primaryKey(),
+  username: varchar("username", { length: 16 }).notNull(),
+  email: varchar("email", { length: 256 }).notNull(),
+  password: varchar("password", { length: 32 }).notNull(),
+  createdAt: timestamp("created_at", { withTimezone: true })
+    .default(sql`CURRENT_TIMESTAMP`)
+    .notNull(),
+  profilePicture: varchar("user_profile_picture", { length: 1024 }),
+});
+
+export const threadMembers = createTable("thread_members", {
+  id: serial("thread_member_id").primaryKey(),
+  threadId: serial("thread_id").references(() => threads.id),
+  userId: serial("user_id").references(() => users.id),
+  role: rolesEnum("role").default("user").notNull(),
+  createdAt: timestamp("created_at", { withTimezone: true })
+    .default(sql`CURRENT_TIMESTAMP`)
+    .notNull(),
+});
+
 export const posts = createTable(
   "posts",
   {
     id: serial("post_id").primaryKey(),
-    threadId: serial("thread_id").references(() => thread.id),
+    threadId: serial("thread_id").references(() => threads.id),
     title: varchar("title", { length: 256 }).notNull(),
     content: varchar("content", { length: 256 }).notNull(),
     image: varchar("image", { length: 256 }),
@@ -45,50 +78,22 @@ export const posts = createTable(
   },
   (example) => ({
     titleIndex: index("title_idx").on(example.title),
+    threadIndex: index("thread_idx").on(example.threadId),
   }),
 );
-
-export const thread = createTable("threads", {
-  id: serial("thread_id").primaryKey(),
-  name: varchar("name", { length: 256 }).notNull(),
-  description: varchar("description", { length: 256 }).notNull(),
-  image: varchar("image", { length: 256 }),
-  banner: varchar("banner", { length: 256 }),
-  createdAt: timestamp("created_at", { withTimezone: true })
-    .default(sql`CURRENT_TIMESTAMP`)
-    .notNull(),
-  createdBy: serial("created_by").notNull(),
-});
-
-export const threadMembers = createTable("thread_members", {
-  id: serial("thread_member_id").primaryKey(),
-  threadId: serial("thread_id").references(() => thread.id),
-  userId: serial("user_id").references(() => users.id),
-  role: rolesEnum("role").default("user").notNull(),
-  createdAt: timestamp("created_at", { withTimezone: true })
-    .default(sql`CURRENT_TIMESTAMP`)
-    .notNull(),
-});
-
-export const users = createTable("users", {
-  id: serial("user_id").primaryKey(),
-  username: varchar("username", { length: 256 }).notNull(),
-  email: varchar("email", { length: 256 }).notNull(),
-  password: varchar("password", { length: 256 }).notNull(),
-  createdAt: timestamp("created_at", { withTimezone: true })
-    .default(sql`CURRENT_TIMESTAMP`)
-    .notNull(),
-  profilePicture: varchar("profile_picture", { length: 256 }),
-});
 
 export const comments = createTable(
   "comments",
   {
     id: serial("comment_id").primaryKey(),
-    postId: serial("post_id").references(() => posts.id),
-    authorId: serial("user_id").references(() => users.id),
-    parentCommentId: serial("parent_comment_id").notNull(),
-    // vote count
+    postId: serial("post_id")
+      .references(() => posts.id)
+      .notNull(),
+    authorId: serial("user_id")
+      .references(() => users.id)
+      .notNull(),
+    parentCommentId: serial("parent_comment_id"),
+    // get the vote count from commentVotes table
     content: varchar("content", { length: 256 }).notNull(),
     createdAt: timestamp("created_at", { withTimezone: true })
       .default(sql`CURRENT_TIMESTAMP`)
@@ -99,19 +104,59 @@ export const comments = createTable(
   },
   (example) => ({
     contentIndex: index("content_idx").on(example.content),
+    postIndex: index("post_idx").on(example.postId),
   }),
 );
 
 export const postVotes = createTable("post_votes", {
   id: serial("post_vote_id").primaryKey(),
-  postId: serial("post_id").notNull(),
-  userId: serial("user_id").notNull(),
-  vote: varchar("vote", { length: 256 }).notNull(),
+  postId: serial("post_id").references(() => posts.id),
+  userId: serial("user_id").references(() => users.id),
+  vote: integer("vote").notNull(),
 });
 
 export const commentVotes = createTable("comment_votes", {
   id: serial("comment_vote_id").primaryKey(),
-  commentId: serial("comment_id").notNull(),
-  userId: serial("user_id").notNull(),
-  vote: varchar("vote", { length: 256 }).notNull(),
+  commentId: serial("comment_id").references(() => comments.id),
+  userId: serial("user_id").references(() => users.id),
+  vote: integer("vote").notNull(),
 });
+
+export const postRelations = relations(posts, ({ one }) => ({
+  author: one(users, {
+    fields: [posts.authorId],
+    references: [users.id],
+  }),
+  thread: one(threads, {
+    fields: [posts.threadId],
+    references: [threads.id],
+  }),
+}));
+
+export const commentRelations = relations(comments, ({ one }) => ({
+  parentComment: one(comments, {
+    fields: [comments.parentCommentId],
+    references: [comments.id],
+  }),
+}));
+
+export const userRelations = relations(users, ({ many }) => ({
+  posts: many(posts),
+  threadMembers: many(threadMembers),
+}));
+
+export const threadRelations = relations(threads, ({ many }) => ({
+  threadMembers: many(threadMembers),
+  posts: many(posts),
+}));
+
+export const threadMemberRelations = relations(threadMembers, ({ one }) => ({
+  thread: one(threads, {
+    fields: [threadMembers.threadId],
+    references: [threads.id],
+  }),
+  user: one(users, {
+    fields: [threadMembers.userId],
+    references: [users.id],
+  }),
+}));
