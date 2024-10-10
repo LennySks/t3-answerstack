@@ -8,7 +8,7 @@ import {
   uniqueIndex,
 } from "drizzle-orm/pg-core";
 
-import * as schema from "./schema";
+import * as schema from "./posts";
 
 // Use this object to send drizzle queries to your DB
 export const db = drizzle(sql, { schema });
