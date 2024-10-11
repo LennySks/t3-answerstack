@@ -9,8 +9,8 @@ async function Threads() {
   });
   return (
     <div className="flex flex-wrap gap-4">
-      {[...threads, ...threads, ...threads].map((thread, index) => (
-        <div key={thread.id + "-" + index} className="w-48">
+      {threads.map((thread) => (
+        <div key={thread.id} className="w-48">
           <img src={thread.image} alt="Image logo" width="80px" />
           <div key={thread.id}>{thread.name}</div>
         </div>
