@@ -11,7 +11,7 @@ export default async function Home() {
   return (
     <main className="">
       <div className="flex flex-wrap gap-4">
-        {[...threads].map((thread, index) => (
+        {[...threads, ...threads, ...threads].map((thread, index) => (
           <div key={thread.id + "-" + index} className="w-48">
             <img src={thread.image} alt="Image logo" width="80px" />
             <div key={thread.id}>{thread.name}</div>

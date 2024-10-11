@@ -9,8 +9,9 @@
   - [x] Adjust tables to fit the app
     - [x] Fix relationships between entities (one to one, one to many, many to many)
     - [x] Add constraints (not null, unique, foreign key)
-- [ ] Attach DB to UI
-- [ ] Add Authentication (w/ Clerk)
+- [x] Attach DB to UI
+- [x] Add Authentication (w/ Clerk)
+  - Will add another authentication method like nextauth
 - [ ] Add Image Upload
 - [ ] Error management (w/ Sentry)
 - [ ] Routing/Image page (parallel route)
