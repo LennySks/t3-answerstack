@@ -13,6 +13,8 @@
 - [x] Add Authentication (w/ Clerk)
   - Will add another authentication method like nextauth
 - [ ] Add Image Upload
+- [ ] "taint" (Server only)
+- [ ] Use Next/Image component
 - [ ] Error management (w/ Sentry)
 - [ ] Routing/Image page (parallel route)
 - [ ] Delete button (w/ server actions)
