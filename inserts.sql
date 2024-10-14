@@ -4,7 +4,7 @@ answerstack_threads,
 answerstack_users,
 answerstack_flairs,
 answerstack_comments,
-  answerstack_comment_votes,
+answerstack_comment_votes,
 answerstack_post_flairs,
 answerstack_post_votes
   CASCADE;

@@ -1,6 +1,5 @@
 import { SignedIn, SignedOut, useAuth } from "@clerk/nextjs";
 import Threads from "./_components/threads"; // Import the Threads component from _components
-import AuthCheck from "./_components/AuthCheck";
 
 export const dynamic = "force-dynamic";
 
@@ -13,7 +12,6 @@ export default function Home() {
         </div>
       </SignedOut>
       <SignedIn>
-        {/* Threads is a server component, so it can be used in SignedIn */}
         <Threads />
       </SignedIn>
     </main>

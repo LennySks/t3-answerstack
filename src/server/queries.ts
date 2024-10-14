@@ -9,3 +9,13 @@ export async function getThreads() {
 
   return threads;
 }
+
+export async function getThread(id: number) {
+  const thread = await db.query.threads.findFirst({
+    where: (model, { eq }) => eq(model.id, id),
+  });
+
+  if (!thread) throw new Error("Thread not found");
+
+  return thread;
+}
