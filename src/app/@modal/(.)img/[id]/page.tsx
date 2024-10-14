@@ -1,4 +1,6 @@
 import { getThread } from "~/server/queries";
+import { Modal } from "./modal";
+import FullPageImageView from "~/app/components/full-image-page";
 
 export default async function PhotoModal({
   params: { id: photoId },
@@ -10,8 +12,8 @@ export default async function PhotoModal({
   const thread = await getThread(idAsNum);
 
   return (
-    <div>
-      <img src={thread.image} alt="thread image" className="w-96" />
-    </div>
+    <Modal>
+      <FullPageImageView id={thread.id} />
+    </Modal>
   );
 }
