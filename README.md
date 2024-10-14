@@ -10,8 +10,12 @@
     - [x] Fix relationships between entities (one to one, one to many, many to many)
     - [x] Add constraints (not null, unique, foreign key)
 - [x] Attach DB to UI
-- [x] Add Authentication (w/ Clerk)
-  - Will add another authentication method like nextauth
+- [x] Add Authentication (w/ Clerk) _(Will add another authentication method like nextauth)_
+  - [ ] Save user to own DB
+    - [ ] Sign up user (w/ Clerk)
+    - [ ] Fetch the signed up user (User Id from Clerk)
+    - [ ] Save user to own DB
+    - [ ] (Optional) After sign up, redirect to profile completion where user can choose profile picture, username etc.
 - [ ] Add Image Upload
 - [ ] "taint" (Server only)
 - [ ] Use Next/Image component
