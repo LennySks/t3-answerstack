@@ -61,10 +61,9 @@ export const postFlairs = createTable(
 );
 
 export const users = createTable("users", {
-  id: serial("user_id").primaryKey(),
-  username: varchar("username", { length: 16 }).notNull(),
+  id: varchar("user_id", { length: 255 }).primaryKey(),
+  username: varchar("username", { length: 16 }),
   email: varchar("email", { length: 80 }).unique().notNull(),
-  password: varchar("password", { length: 32 }).notNull(),
   createdAt: timestamp("created_at", { withTimezone: true })
     .default(sql`CURRENT_TIMESTAMP`)
     .notNull(),
@@ -74,7 +73,7 @@ export const users = createTable("users", {
 export const threadMembers = createTable("thread_members", {
   id: serial("thread_member_id").primaryKey(),
   threadId: serial("thread_id").references(() => threads.id),
-  userId: serial("user_id").references(() => users.id),
+  userId: varchar("user_id").references(() => users.id),
   role: rolesEnum("role").default("user").notNull(),
   createdAt: timestamp("created_at", { withTimezone: true })
     .default(sql`CURRENT_TIMESTAMP`)
@@ -89,7 +88,7 @@ export const posts = createTable(
     title: varchar("title", { length: 256 }).notNull(),
     content: varchar("content", { length: 256 }).notNull(),
     image: varchar("image", { length: 256 }),
-    authorId: integer("author_id").references(() => users.id),
+    authorId: varchar("author_id").references(() => users.id),
     createdAt: timestamp("created_at", { withTimezone: true })
       .default(sql`CURRENT_TIMESTAMP`)
       .notNull(),
@@ -110,7 +109,7 @@ export const comments = createTable(
     postId: serial("post_id")
       .references(() => posts.id)
       .notNull(),
-    authorId: serial("user_id")
+    authorId: varchar("user_id")
       .references(() => users.id)
       .notNull(),
     parentCommentId: serial("parent_comment_id"),
@@ -132,14 +131,14 @@ export const comments = createTable(
 export const postVotes = createTable("post_votes", {
   id: serial("post_vote_id").primaryKey(),
   postId: serial("post_id").references(() => posts.id),
-  userId: serial("user_id").references(() => users.id),
+  userId: varchar("user_id").references(() => users.id),
   vote: integer("vote").notNull(),
 });
 
 export const commentVotes = createTable("comment_votes", {
   id: serial("comment_vote_id").primaryKey(),
   commentId: serial("comment_id").references(() => comments.id),
-  userId: serial("user_id").references(() => users.id),
+  userId: varchar("user_id").references(() => users.id),
   vote: integer("vote").notNull(),
 });
 

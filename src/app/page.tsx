@@ -1,12 +1,16 @@
 import { SignedIn, SignedOut } from "@clerk/nextjs";
-import { db } from "~/server/db";
+import { getThreads } from "~/server/queries";
+import { currentUser } from "@clerk/nextjs/server";
 
 export const dynamic = "force-dynamic";
 
 async function Threads() {
-  const threads = await db.query.threads.findMany({
-    orderBy: (model, { desc }) => desc(model.id),
-  });
+  const threads = await getThreads();
+
+  const user = await currentUser();
+
+  console.log("Current user: ", user);
+
   return (
     <div className="flex flex-wrap gap-4">
       {threads.map((thread) => (

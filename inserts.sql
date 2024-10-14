@@ -1,3 +1,14 @@
+DROP TABLE IF EXISTS answerstack_thread_members,
+answerstack_posts,
+answerstack_threads,
+answerstack_users,
+answerstack_flairs,
+answerstack_comments,
+  answerstack_comment_votes,
+answerstack_post_flairs,
+answerstack_post_votes
+  CASCADE;
+
 INSERT INTO answerstack_threads (name, description, thread_image, thread_banner, created_at) VALUES
 ('FPSAimTrainer', 
  'The world’s best aim trainer, trusted by top pros, streamers, and players like you. Upgrade your FPS skills with over 25,000 player-created scenarios, infinite customization, cloned game physics, coaching playlists, and guided training and analysis. Become a human aimbot! https://store.steampowered.com/app/824270/', 
@@ -19,3 +30,5 @@ INSERT INTO answerstack_threads (name, description, thread_image, thread_banner,
  'https://utfs.io/f/W3VPmidSNmjM3c9RVb0crmbVTChKPsWSEdYFtZBewNqkDagO', 
  CURRENT_TIMESTAMP 
  )
+ 
+ 
