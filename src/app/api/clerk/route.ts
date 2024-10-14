@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 import { db } from "~/server/db";
 import { users } from "~/server/db/posts";
 
-export async function createUserInDb() {
+export async function POST() {
   try {
     const user = await currentUser();
 

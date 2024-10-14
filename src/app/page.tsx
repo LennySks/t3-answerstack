@@ -1,29 +1,10 @@
-import { SignedIn, SignedOut } from "@clerk/nextjs";
-import { getThreads } from "~/server/queries";
-import { currentUser } from "@clerk/nextjs/server";
+import { SignedIn, SignedOut, useAuth } from "@clerk/nextjs";
+import Threads from "./_components/threads"; // Import the Threads component from _components
+import AuthCheck from "./_components/AuthCheck";
 
 export const dynamic = "force-dynamic";
 
-async function Threads() {
-  const threads = await getThreads();
-
-  const user = await currentUser();
-
-  console.log("Current user: ", user);
-
-  return (
-    <div className="flex flex-wrap gap-4">
-      {threads.map((thread) => (
-        <div key={thread.id} className="w-48">
-          <img src={thread.image} alt="Image logo" width="80px" />
-          <div key={thread.id}>{thread.name}</div>
-        </div>
-      ))}
-    </div>
-  );
-}
-
-export default async function Home() {
+export default function Home() {
   return (
     <main className="">
       <SignedOut>
@@ -32,6 +13,7 @@ export default async function Home() {
         </div>
       </SignedOut>
       <SignedIn>
+        {/* Threads is a server component, so it can be used in SignedIn */}
         <Threads />
       </SignedIn>
     </main>

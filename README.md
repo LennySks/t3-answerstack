@@ -12,13 +12,13 @@
 - [x] Attach DB to UI
 - [x] Add Authentication (w/ Clerk) _(Will add another authentication method like nextauth)_
   - [ ] Save user to own DB
-    - [ ] Sign up user (w/ Clerk)
+    - [x] Sign up user (w/ Clerk)
     - [ ] Fetch the signed up user (User Id from Clerk)
     - [ ] Save user to own DB
     - [ ] (Optional) After sign up, redirect to profile completion where user can choose profile picture, username etc.
-- [ ] Add Image Upload
-- [ ] "taint" (Server only)
-- [ ] Use Next/Image component
+- [x] Add Image Upload
+- [ ] "taint" (Server only) _not needed_
+- [x] Use Next/Image component
 - [ ] Error management (w/ Sentry)
 - [ ] Routing/Image page (parallel route)
 - [ ] Delete button (w/ server actions)
