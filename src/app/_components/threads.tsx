@@ -1,4 +1,4 @@
-// threads.tsx (or any other name you'd prefer)
+// threads.tsx
 import Image from "next/image";
 import Link from "next/link";
 import { getThreads } from "~/server/queries";
@@ -12,7 +12,8 @@ export default async function Threads() {
     <div className="flex flex-wrap justify-center gap-4">
       {threads.map((thread) => (
         <div key={thread.id} className="w-48">
-          <Link href={`/img/${thread.id}`}>
+          {/* Use formatted name in the URL */}
+          <Link href={`/threads/${thread.name}`}>
             <Image
               src={thread.image ?? "idk"}
               style={{ objectFit: "fill" }}
@@ -21,6 +22,7 @@ export default async function Threads() {
               height={80}
             />
           </Link>
+          {/* Use original name in the display */}
           <div>{thread.name}</div>
         </div>
       ))}

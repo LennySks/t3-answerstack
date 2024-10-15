@@ -19,3 +19,15 @@ export async function getThread(id: number) {
 
   return thread;
 }
+
+export async function getThreadByName(name: string) {
+  const thread = await db.query.threads.findFirst({
+    where: (model, { eq }) => eq(model.name, name),
+  });
+
+  if (!thread) throw new Error("Thread not found");
+
+  return thread;
+}
+
+export async function createThread() {}
