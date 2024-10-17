@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { type z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -16,14 +16,17 @@ import {
 } from "~/components/ui/form";
 import { Input } from "~/components/ui/input";
 import { Textarea } from "~/components/ui/textarea";
-import { createThreadAction } from "~/server/db/actions/createThreadAction";
 import ArrowRightSvg from "~/assets/ArrowRightSvg";
 import ArrowLeftSvg from "~/assets/ArrowLeftSvg";
 import PlusSvg from "~/assets/PlusSvg";
 import { toast } from "sonner";
+import LoadingSpinner from "~/assets/LoadingSpinner";
+import { createThreadAction } from "~/server/db/actions/createThreadAction";
 
 export default function NewThreadModal() {
   const [page, setPage] = useState(0);
+
+  const modalRef = useRef<HTMLDialogElement>(null);
 
   const form = useForm<z.infer<typeof newThreadSchema>>({
     resolver: zodResolver(newThreadSchema),
@@ -37,9 +40,23 @@ export default function NewThreadModal() {
   });
 
   async function onSubmit() {
-    toast.info("Creating thread...");
-    // await createThreadAction(form.getValues());
-    // toast.success("Thread created successfully");
+    modalRef.current?.close();
+
+    toast(
+      <div className="flex items-center gap-1">
+        <LoadingSpinner size={18} /> Creating thread...
+      </div>,
+      { duration: 5000 },
+    );
+    await new Promise((f) => setTimeout(f, 1000));
+    await createThreadAction(form.getValues())
+      .then(() => {
+        toast.success("Thread created successfully!");
+        handleClearInputs();
+      })
+      .catch(() => {
+        toast.error("An error occurred while creating the thread");
+      });
   }
 
   const handleNext = async () => {
@@ -60,7 +77,7 @@ export default function NewThreadModal() {
   };
 
   return (
-    <dialog id="my_modal_3" className="modal">
+    <dialog ref={modalRef} id="my_modal_3" className="modal" data-dialog>
       <div className="modal-box bg-white">
         <form method="dialog">
           <button

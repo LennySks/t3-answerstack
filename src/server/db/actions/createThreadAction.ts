@@ -14,7 +14,7 @@ export async function createThreadAction(
     console.log("Received thread data:", newThreadData);
 
     // Proceed with creating the thread
-    // await createThread(newThreadData);
+    await createThread(newThreadData);
     console.log("Thread created successfully");
   } catch (error) {
     if (error instanceof z.ZodError) {
