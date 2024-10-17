@@ -20,107 +20,41 @@
 - [ ] "taint" (Server only) _not needed_
 - [x] Use Next/Image component
 - [x] Error management (w/ Sentry)
-- [ ] Routing/Image page (parallel route)
-- [ ] Delete button (w/ server actions)
+- [ ] Fetching (State management)
+  - [ ] Fetch threads and use globally
+    - [ ] Use in sidebar
+  - [ ] Fetch posts on main page
 - [ ] CRUD
   - [ ] Thread
-    - [ ] Visibility
+    - [x] Create
+    - [ ] Delete
+    - [ ] Update
   - [ ] User
+    - [ ] Create (Get id from clerk and create user afterwards)
+    - [ ] Delete (Probably not a good idea, stick to deactivating/archiving)
+    - [ ] Update
   - [ ] ThreadMember
+    - [ ] Create (When becoming a part of a thread)
+    - [ ] Delete (When leaving a thread)
   - [ ] Post
     - [ ] Visibility (Optional)
+    - [ ] Create
+    - [ ] Delete
+    - [ ] Update
   - [ ] Comment
+    - [ ] Create
+      - [ ] Comment on post
+      - [ ] Reply on comment
   - [ ] PostVotes
+    - [ ] Upvote a post
+    - [ ] Downvote a post
+    - [ ] Remove upvote/downvote (update)
   - [ ] CommentVotes
-- [ ] Analytics (posthog)
+    - [ ] Upvote a comment
+    - [ ] Downvote a comment
+    - [ ] Remove upvote/downvote (update)
+- [x] Analytics (posthog)
 - [ ] Ratelimiting (upstash)
-
-## Tables
-
-- Thread
-
-  - Id
-  - Name
-  - Description
-  - Image? (Logo)
-  - Banner? (Cover)
-  - CreatedAt
-  - Members (Will be a count of thread members, doesnt have to be stored in the database. Instead it will be queried when needed)
-  - CreatedBy (userId)
-
-- ThreadMembers
-
-  - Id
-  - ThreadId
-  - UserId
-  - Role (admin, member)
-  - JoinedAt (date)
-
-- Posts
-
-  - Id
-  - ThreadId
-  - Title
-  - Content
-  - Image?
-  - authorId (userId)
-  - CreatedAt
-  - UpdatedAt (edited)
-  - VoteCount (from PostVotes)
-  - Visibility (public/private)
-  - Comments (List of comments)
-
-- Users
-
-  - Id
-  - username
-  - email
-  - password (hashed)
-  - Lists of posts (Will be queried when needed, doesnt need to be in the database.)
-  - Lists of comments (Will be queried when needed, doesnt need to be in the database.)
-  - Profile Picture
-
-- Comments
-
-  - Id
-  - postId
-  - userId
-  - ParentCommentId
-  - VoteCount (from CommentVotes)
-  - Content (message)
-  - CreatedAt
-  - UpdatedAt (edited)
-
-- PostVotes
-
-  - Id
-  - postId
-  - userId
-  - vote (upvote/downvote)
-
-- CommentVotes
-
-  - Id
-  - commentId
-  - userId
-  - vote (upvote/downvote)
-
-- Visiblity (Enum)
-
-  - Public
-  - Private
-  - Hidden
-  - Archived
-
-- Flair
-
-  - Id
-  - ThreadId
-  - Name
-  - Color
-  - Description
-
-- PostFlairs
   - Id
   - PostId
   - FlairId
