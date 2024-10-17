@@ -22,10 +22,105 @@
 - [x] Error management (w/ Sentry)
 - [ ] Routing/Image page (parallel route)
 - [ ] Delete button (w/ server actions)
+- [ ] CRUD
+  - [ ] Thread
+    - [ ] Visibility
+  - [ ] User
+  - [ ] ThreadMember
+  - [ ] Post
+    - [ ] Visibility (Optional)
+  - [ ] Comment
+  - [ ] PostVotes
+  - [ ] CommentVotes
 - [ ] Analytics (posthog)
 - [ ] Ratelimiting (upstash)
 
-## Navigation
+## Tables
 
-- Thread (localhost:3000/[thread])
-  - Post (localhost:3000/[thread]/[comments]/[post_id]/[post_title])
+- Thread
+
+  - Id
+  - Name
+  - Description
+  - Image? (Logo)
+  - Banner? (Cover)
+  - CreatedAt
+  - Members (Will be a count of thread members, doesnt have to be stored in the database. Instead it will be queried when needed)
+  - CreatedBy (userId)
+
+- ThreadMembers
+
+  - Id
+  - ThreadId
+  - UserId
+  - Role (admin, member)
+  - JoinedAt (date)
+
+- Posts
+
+  - Id
+  - ThreadId
+  - Title
+  - Content
+  - Image?
+  - authorId (userId)
+  - CreatedAt
+  - UpdatedAt (edited)
+  - VoteCount (from PostVotes)
+  - Visibility (public/private)
+  - Comments (List of comments)
+
+- Users
+
+  - Id
+  - username
+  - email
+  - password (hashed)
+  - Lists of posts (Will be queried when needed, doesnt need to be in the database.)
+  - Lists of comments (Will be queried when needed, doesnt need to be in the database.)
+  - Profile Picture
+
+- Comments
+
+  - Id
+  - postId
+  - userId
+  - ParentCommentId
+  - VoteCount (from CommentVotes)
+  - Content (message)
+  - CreatedAt
+  - UpdatedAt (edited)
+
+- PostVotes
+
+  - Id
+  - postId
+  - userId
+  - vote (upvote/downvote)
+
+- CommentVotes
+
+  - Id
+  - commentId
+  - userId
+  - vote (upvote/downvote)
+
+- Visiblity (Enum)
+
+  - Public
+  - Private
+  - Hidden
+  - Archived
+
+- Flair
+
+  - Id
+  - ThreadId
+  - Name
+  - Color
+  - Description
+
+- PostFlairs
+  - Id
+  - PostId
+  - FlairId

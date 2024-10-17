@@ -1,7 +1,7 @@
 // threads.tsx
 import Image from "next/image";
 import Link from "next/link";
-import { getThreads } from "~/server/queries";
+import { getThreads } from "~/server/api/ThreadsAPI";
 
 export const dynamic = "force-dynamic";
 
@@ -13,7 +13,7 @@ export default async function Threads() {
       {threads.map((thread) => (
         <div key={thread.id} className="w-48">
           {/* Use formatted name in the URL */}
-          <Link href={`/threads/${thread.name}`}>
+          <Link href={`/threads/${formatName(thread.name)}`}>
             <Image
               src={thread.image ?? "idk"}
               style={{ objectFit: "fill" }}
@@ -28,4 +28,8 @@ export default async function Threads() {
       ))}
     </div>
   );
+}
+
+function formatName(name: string): string {
+  return name.replace(/\s+/g, "_").toLowerCase();
 }

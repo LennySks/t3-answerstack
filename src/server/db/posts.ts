@@ -86,7 +86,7 @@ export const posts = createTable(
     id: serial("post_id").primaryKey(),
     threadId: serial("thread_id").references(() => threads.id),
     title: varchar("title", { length: 256 }).notNull(),
-    content: varchar("content", { length: 256 }).notNull(),
+    content: varchar("content", { length: 40000 }).notNull(),
     image: varchar("image", { length: 256 }),
     authorId: varchar("author_id").references(() => users.id),
     createdAt: timestamp("created_at", { withTimezone: true })

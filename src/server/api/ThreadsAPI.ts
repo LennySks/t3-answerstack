@@ -1,6 +1,8 @@
 import "server-only";
-import { db } from "./db";
+import { db } from "../db";
 import { auth, currentUser } from "@clerk/nextjs/server";
+import { type CreateThread } from "../dto/CreateThread";
+import { threads } from "../db/posts";
 
 export async function getThreads() {
   const threads = await db.query.threads.findMany({
@@ -30,4 +32,13 @@ export async function getThreadByName(name: string) {
   return thread;
 }
 
-export async function createThread() {}
+export async function createThread(newThread: CreateThread) {
+  const thread = await db
+    .insert(threads)
+    .values({
+      ...newThread,
+    })
+    .onConflictDoNothing();
+
+  return thread;
+}
