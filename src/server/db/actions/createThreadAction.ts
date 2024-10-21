@@ -1,8 +1,8 @@
 "use server";
 
-import { createThread } from "~/server/api/ThreadsAPI"; // Import your API
 import { z } from "zod";
 import { newThreadSchema } from "~/app/utils/validationSchemas/newThreadSchema";
+import { api } from "~/trpc/server";
 
 export async function createThreadAction(
   values: z.infer<typeof newThreadSchema>,
@@ -14,7 +14,7 @@ export async function createThreadAction(
     console.log("Received thread data:", newThreadData);
 
     // Proceed with creating the thread
-    await createThread(newThreadData);
+    await api.threads.createThread(newThreadData);
     console.log("Thread created successfully");
   } catch (error) {
     if (error instanceof z.ZodError) {
