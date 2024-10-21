@@ -10,8 +10,8 @@ import { Sidebar } from "./_components/Sidebar";
 import { CSPostHogProvider } from "./_analytics/provider";
 import { Toaster } from "sonner";
 import SidebarThreads from "./_components/SidebarThreads";
-import { HydrateClient } from "~/trpc/server";
 import { TRPCReactProvider } from "~/trpc/react";
+
 export const metadata: Metadata = {
   title: "Answerstack",
   description: "A Q&A platform for everyone.",

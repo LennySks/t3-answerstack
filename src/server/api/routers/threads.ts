@@ -38,3 +38,9 @@ export const threadsRouter = createTRPCRouter({
       return db.insert(threads).values(newThread);
     }),
 });
+
+export const postsRouter = createTRPCRouter({
+  getPosts: publicProcedure.query(() => {
+    return db.query.posts.findMany();
+  }),
+});
