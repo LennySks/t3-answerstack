@@ -5,5 +5,5 @@ export interface Thread {
   image?: string;
   banner?: string;
   createdAt: Date;
-  createdBy: string;
+  createdBy?: string;
 }

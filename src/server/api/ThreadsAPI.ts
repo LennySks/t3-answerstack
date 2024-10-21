@@ -1,4 +1,3 @@
-import "server-only";
 import { db } from "../db/root";
 import { auth, currentUser } from "@clerk/nextjs/server";
 import { type CreateThread } from "../dto/CreateThread";

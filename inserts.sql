@@ -31,4 +31,7 @@ INSERT INTO answerstack_threads (name, description, thread_image, thread_banner,
  CURRENT_TIMESTAMP 
  )
  
+
+ INSERT INTO answerstack_posts (thread_id, title, content, image, author_id, ) VALUES
+ (1, "What real life benefits have you gained from aim training?", "Title says it all.", null, null)
  

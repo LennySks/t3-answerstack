@@ -1,10 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import { Home, TrendingUp, Star, Settings, Plus } from "lucide-react";
+import { Home, TrendingUp, Star, Plus } from "lucide-react";
 import NewThreadModal from "./modals/NewThreadModal";
 
-export function Sidebar() {
+export function Sidebar({ children }: { children: React.ReactNode }) {
   return (
     <div className="rounded-lg bg-background">
       <nav className="space-y-2">
@@ -46,6 +46,7 @@ export function Sidebar() {
           <span>Create a thread</span>
         </div>
         <NewThreadModal />
+        {children}
       </nav>
     </div>
   );
