@@ -1,6 +1,6 @@
 import { currentUser } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
-import { db } from "~/server/db";
+import { db } from "~/server/db/root";
 import { users } from "~/server/db/posts";
 
 export async function POST() {

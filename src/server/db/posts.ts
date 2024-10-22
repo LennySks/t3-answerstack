@@ -37,6 +37,7 @@ export const threads = createTable("threads", {
   createdAt: timestamp("created_at", { withTimezone: true })
     .default(sql`CURRENT_TIMESTAMP`)
     .notNull(),
+  createdBy: varchar("created_by", { length: 255 }),
 });
 
 export const flairs = createTable("flairs", {
