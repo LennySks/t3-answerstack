@@ -25,6 +25,7 @@ import { createThreadAction } from "~/server/db/actions/createThreadAction";
 
 export default function NewThreadModal() {
   const [page, setPage] = useState(0);
+  const totalPages = 3;
 
   const modalRef = useRef<HTMLDialogElement>(null);
 
@@ -59,21 +60,17 @@ export default function NewThreadModal() {
       });
   }
 
-  const handleNext = async () => {
-    if (form.formState.isValid) {
-      setPage(1);
-    } else {
-      await form.trigger(["name", "description"]);
-    }
-  };
-
   const handleClearInputs = () => {
     form.reset();
     setPage(0);
   };
 
+  const handleNext = () => {
+    setPage((prevPage) => Math.min(prevPage + 1, totalPages - 1));
+  };
+
   const handlePrevious = () => {
-    setPage(0);
+    setPage((prevPage) => Math.max(prevPage - 1, 0));
   };
 
   return (
@@ -181,11 +178,27 @@ export default function NewThreadModal() {
                       )}
                     />
                   </div>
+
+                  {/* Page 3 */}
+                  <div className="w-full flex-shrink-0 items-center">
+                    <div className="card card-compact w-96 shadow-xl">
+                      <figure>
+                        <img
+                          src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp"
+                          alt="Shoes"
+                        />
+                      </figure>
+                      <div className="card-body">
+                        <h2 className="card-title">{form.getValues().name}</h2>
+                        <p>{form.getValues().description}</p>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
               <div className="flex items-center justify-between">
                 <div className="flex space-x-2">
-                  {[0, 1].map((step) => (
+                  {Array.from({ length: totalPages }, (_, step) => (
                     <div
                       key={step}
                       className={`h-3 w-3 rounded-full ${
@@ -195,7 +208,7 @@ export default function NewThreadModal() {
                   ))}
                 </div>
                 <div className="flex items-center space-x-2">
-                  {page === 1 && (
+                  {page > 0 && (
                     <Button
                       type="button"
                       onClick={handlePrevious}
@@ -206,7 +219,7 @@ export default function NewThreadModal() {
                       </div>
                     </Button>
                   )}
-                  {page === 0 ? (
+                  {page < totalPages - 1 ? (
                     <Button
                       type="button"
                       onClick={handleNext}

@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Home, TrendingUp, Star, Settings, Plus } from "lucide-react";
+import { Home, TrendingUp, Star, Plus } from "lucide-react";
 import NewThreadModal from "./modals/NewThreadModal";
 
 export function Sidebar() {
