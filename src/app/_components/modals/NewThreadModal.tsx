@@ -8,10 +8,10 @@ import { newThreadSchema } from "../../utils/validationSchemas/newThreadSchema";
 import { Button } from "~/components/ui/button";
 import {
   Form,
+  FormControl,
   FormField,
   FormItem,
   FormLabel,
-  FormControl,
   FormMessage,
 } from "~/components/ui/form";
 import { Input } from "~/components/ui/input";
@@ -37,6 +37,7 @@ export default function NewThreadModal() {
       description: "",
       image: "",
       banner: "",
+      visibility: "",
     },
   });
 
@@ -49,6 +50,7 @@ export default function NewThreadModal() {
       </div>,
       { duration: 5000 },
     );
+    // TODO: Delete this delay
     await new Promise((f) => setTimeout(f, 1000));
     await createThreadAction(form.getValues())
       .then(() => {

@@ -2,16 +2,7 @@
 // https://orm.drizzle.team/docs/sql-schema-declaration
 
 import { relations, sql } from "drizzle-orm";
-import {
-  index,
-  integer,
-  pgEnum,
-  pgTableCreator,
-  primaryKey,
-  serial,
-  timestamp,
-  varchar,
-} from "drizzle-orm/pg-core";
+import { index, integer, pgEnum, pgTableCreator, primaryKey, serial, timestamp, varchar } from "drizzle-orm/pg-core";
 
 /**
  * This is an example of how to use the multi-project schema feature of Drizzle ORM. Use the same
@@ -20,12 +11,12 @@ import {
  * @see https://orm.drizzle.team/docs/goodies#multi-project-schema
  */
 export const createTable = pgTableCreator((name) => `answerstack_${name}`);
-export const rolesEnum = pgEnum("roles", ["admin", "moderator", "user"]);
+export const rolesEnum = pgEnum("roles", ["Admin", "Moderator", "User"]);
 export const threadVisibilityEnum = pgEnum("thread_visibility", [
-  "public",
-  "private",
-  "hidden",
-  "archived",
+  "Public",
+  "Private",
+  "Hidden",
+  "Archived",
 ]);
 
 export const threads = createTable("threads", {
@@ -38,6 +29,7 @@ export const threads = createTable("threads", {
     .default(sql`CURRENT_TIMESTAMP`)
     .notNull(),
   createdBy: varchar("created_by", { length: 255 }),
+  visibility: threadVisibilityEnum("visibility").notNull(),
 });
 
 export const flairs = createTable("flairs", {
@@ -75,7 +67,7 @@ export const threadMembers = createTable("thread_members", {
   id: serial("thread_member_id").primaryKey(),
   threadId: serial("thread_id").references(() => threads.id),
   userId: varchar("user_id").references(() => users.id),
-  role: rolesEnum("role").default("user").notNull(),
+  role: rolesEnum("role").default("User").notNull(),
   createdAt: timestamp("created_at", { withTimezone: true })
     .default(sql`CURRENT_TIMESTAMP`)
     .notNull(),

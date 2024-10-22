@@ -28,7 +28,7 @@
 - [ ] CRUD
     - [ ] Thread
         - [x] Create
-        - [ ] Delete
+        - [ ] Delete (Archiving)
         - [ ] Update
     - [ ] User
         - [ ] Create (Get id from clerk and create user afterwards)

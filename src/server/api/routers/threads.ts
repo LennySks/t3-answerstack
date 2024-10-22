@@ -33,6 +33,7 @@ export const threadsRouter = createTRPCRouter({
         description: input.description,
         image: input.image,
         banner: input.banner,
+        visibility: input.visibility,
       };
 
       return db.insert(threads).values(newThread);
