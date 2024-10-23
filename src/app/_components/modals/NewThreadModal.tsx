@@ -19,11 +19,16 @@ import { Textarea } from "~/components/ui/textarea";
 import ArrowRightSvg from "~/assets/ArrowRightSvg";
 import ArrowLeftSvg from "~/assets/ArrowLeftSvg";
 import PlusSvg from "~/assets/PlusSvg";
-import { toast } from "sonner";
-import LoadingSpinner from "~/assets/LoadingSpinner";
+import { RadioGroup, RadioGroupItem } from "~/components/ui/radio-group";
+import { Visibility } from "~/app/models/Visibility";
 import { createThreadAction } from "~/server/db/actions/createThreadAction";
+import LoadingSpinner from "~/assets/LoadingSpinner";
+import { toast } from "sonner";
+import { useQueryClient } from "@tanstack/react-query";
+import Image from "next/image";
 
 export default function NewThreadModal() {
+  const queryClient = useQueryClient(); // Initialize useQueryClient
   const [page, setPage] = useState(0);
   const totalPages = 3;
 
@@ -37,7 +42,7 @@ export default function NewThreadModal() {
       description: "",
       image: "",
       banner: "",
-      visibility: "",
+      visibility: Visibility.PUBLIC,
     },
   });
 
@@ -48,13 +53,12 @@ export default function NewThreadModal() {
       <div className="flex items-center gap-1">
         <LoadingSpinner size={18} /> Creating thread...
       </div>,
-      { duration: 5000 },
     );
     // TODO: Delete this delay
-    await new Promise((f) => setTimeout(f, 1000));
     await createThreadAction(form.getValues())
-      .then(() => {
+      .then(async () => {
         toast.success("Thread created successfully!");
+        await queryClient.invalidateQueries({ queryKey: ["threads"] }); // Invalidate the queries related to threads
         handleClearInputs();
       })
       .catch(() => {
@@ -131,6 +135,41 @@ export default function NewThreadModal() {
                         </FormItem>
                       )}
                     />
+
+                    <FormField
+                      control={form.control}
+                      name="visibility"
+                      render={({ field }) => (
+                        <FormItem className="space-y-3">
+                          <FormLabel>Thread Visibility</FormLabel>
+                          <FormControl>
+                            <RadioGroup
+                              value={field.value ?? Visibility.PUBLIC}
+                              onValueChange={field.onChange}
+                              className="flex flex-col space-y-1"
+                            >
+                              <FormItem className="flex items-center space-x-3 space-y-0">
+                                <FormControl>
+                                  <RadioGroupItem value="Public" />
+                                </FormControl>
+                                <FormLabel className="font-normal">
+                                  Public
+                                </FormLabel>
+                              </FormItem>
+                              <FormItem className="flex items-center space-x-3 space-y-0">
+                                <FormControl>
+                                  <RadioGroupItem value="Private" />
+                                </FormControl>
+                                <FormLabel className="font-normal">
+                                  Private
+                                </FormLabel>
+                              </FormItem>
+                            </RadioGroup>
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
                   </div>
 
                   {/* Page 2 */}
@@ -185,7 +224,7 @@ export default function NewThreadModal() {
                   <div className="w-full flex-shrink-0 items-center">
                     <div className="card card-compact w-96 shadow-xl">
                       <figure>
-                        <img
+                        <Image
                           src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp"
                           alt="Shoes"
                         />

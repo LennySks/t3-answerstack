@@ -3,7 +3,6 @@ import Link from "next/link";
 import { api } from "~/trpc/server";
 
 // Helper function to simulate delay
-const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 export default async function SidebarThreads() {
   // Add a 10-second delay before calling the API
@@ -11,7 +10,7 @@ export default async function SidebarThreads() {
   const threads = await api.threads.getThreads();
 
   if (!threads || threads.length === 0) {
-    return <div>Loading...</div>;
+    return <div>No threads!</div>;
   }
 
   return (

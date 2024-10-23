@@ -4,6 +4,7 @@ import { z } from "zod";
 import { type CreateThread } from "~/server/dto/CreateThread";
 import { db } from "~/server/db/root";
 import { threads } from "~/server/db/posts";
+import { Visibility } from "~/app/models/Visibility";
 
 export const threadsRouter = createTRPCRouter({
   getThreads: publicProcedure.query(({}) => {
@@ -25,6 +26,7 @@ export const threadsRouter = createTRPCRouter({
         description: z.string().min(3).max(500),
         image: z.string().optional(),
         banner: z.string().optional(),
+        visibility: z.enum([Visibility.PUBLIC, Visibility.PRIVATE]),
       }),
     )
     .mutation(async ({ input }) => {

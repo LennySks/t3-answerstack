@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { Visibility } from "~/app/models/Visibility";
 
 // Thread validation schema
 export const newThreadSchema = z.object({
@@ -6,5 +7,5 @@ export const newThreadSchema = z.object({
   description: z.string().min(10, "Description must be at least 10 characters"),
   image: z.string().optional(),
   banner: z.string().optional(),
-  visibility: z.string(),
+  visibility: z.enum([Visibility.PUBLIC, Visibility.PRIVATE]),
 });
