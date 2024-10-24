@@ -2,7 +2,16 @@
 // https://orm.drizzle.team/docs/sql-schema-declaration
 
 import { relations, sql } from "drizzle-orm";
-import { index, integer, pgEnum, pgTableCreator, primaryKey, serial, timestamp, varchar } from "drizzle-orm/pg-core";
+import {
+  index,
+  integer,
+  pgEnum,
+  pgTableCreator,
+  primaryKey,
+  serial,
+  timestamp,
+  varchar,
+} from "drizzle-orm/pg-core";
 
 /**
  * This is an example of how to use the multi-project schema feature of Drizzle ORM. Use the same
@@ -55,7 +64,7 @@ export const postFlairs = createTable(
 
 export const users = createTable("users", {
   id: varchar("user_id", { length: 255 }).primaryKey(),
-  username: varchar("username", { length: 16 }),
+  username: varchar("username", { length: 32 }).unique().notNull(),
   email: varchar("email", { length: 80 }).unique().notNull(),
   createdAt: timestamp("created_at", { withTimezone: true })
     .default(sql`CURRENT_TIMESTAMP`)

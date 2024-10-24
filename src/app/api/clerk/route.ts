@@ -1,7 +1,6 @@
 import { currentUser } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
-import { db } from "~/server/db/root";
-import { users } from "~/server/db/posts";
+import { api } from "~/trpc/server";
 
 export async function POST() {
   try {
@@ -14,18 +13,19 @@ export async function POST() {
       );
     }
 
-    const existingUser = await db.query.users.findFirst({
-      where: (model, { eq }) => eq(model.id, user.id),
-    });
+    const username = user.username ?? "";
+    const email = user.emailAddresses[0]?.emailAddress ?? "";
+    const existingUser = await api.users.getUserById({ id: user.id });
 
     if (!existingUser) {
-      await db.insert(users).values({
+      await api.users.createUser({
         id: user.id,
-        email: user.emailAddresses[0]?.emailAddress ?? "",
+        username: username,
+        email: email,
       });
-    }
 
-    return NextResponse.json({ success: true });
+      return NextResponse.json({ success: true });
+    }
   } catch (error) {
     console.error("Error saving user data:", error);
     return NextResponse.json(

@@ -13,8 +13,8 @@
 - [x] Add Authentication (w/ Clerk) _(Will add another authentication method like nextauth)_
     - [ ] Save user to own DB
         - [x] Sign up user (w/ Clerk)
-        - [ ] Fetch the signed up user (User Id from Clerk)
-        - [ ] Save user to own DB
+        - [x] Fetch the signed up user (User Id from Clerk)
+        - [x] Save user to own DB
         - [ ] (Optional) After sign up, redirect to profile completion where user can choose profile picture, username
           etc.
 - [x] Add Image Upload
@@ -31,7 +31,7 @@
         - [ ] Delete (Archiving)
         - [ ] Update
     - [ ] User
-        - [ ] Create (Get id from clerk and create user afterwards)
+        - [x] Create (Get id from clerk and create user afterwards)
         - [ ] Delete (Probably not a good idea, stick to deactivating/archiving)
         - [ ] Update
     - [ ] ThreadMember

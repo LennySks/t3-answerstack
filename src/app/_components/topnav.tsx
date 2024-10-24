@@ -1,13 +1,50 @@
 "use client";
-import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/nextjs";
+import {
+  SignedIn,
+  SignedOut,
+  SignInButton,
+  UserButton,
+  useUser,
+} from "@clerk/nextjs";
 import { UploadButton } from "../utils/uploadThing";
 import { useRouter } from "next/navigation";
 import { Input } from "~/components/ui/input";
 import { Search } from "lucide-react";
 import { Button } from "~/components/ui/button";
 import Link from "next/link";
+import { useEffect } from "react";
 export function TopNav() {
   const router = useRouter();
+
+  const { isLoaded, user } = useUser();
+
+  const checkUserInDatabase = async () => {
+    if (!user) return;
+
+    try {
+      const response = await fetch("/api/clerk", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({}),
+      });
+
+      const result = await response.json();
+      if (!response.ok) {
+        console.error(result.error || "Failed to check or create user");
+      }
+    } catch (error) {
+      console.error("Error checking/creating user in database:", error);
+    }
+  };
+
+  // Use effect to check the user in the database after sign in
+  useEffect(() => {
+    if (isLoaded && user) {
+      checkUserInDatabase();
+    }
+  }, [isLoaded, user]);
 
   return (
     <nav className="font-font-semibold flex w-full items-center justify-between border-b p-4 text-xl">

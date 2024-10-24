@@ -5,7 +5,7 @@ export default async function Posts() {
 
   return (
     <div className="flex flex-col gap-4">
-      {[...posts, ...posts].map((post) => (
+      {[...posts, ...posts, ...posts, ...posts, ...posts].map((post) => (
         <div key={post.id}>
           <h2>{post.title}</h2>
           <p>{post.content}</p>

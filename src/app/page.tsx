@@ -1,12 +1,16 @@
 import { HydrateClient } from "~/trpc/server";
-import Posts from "~/app/_components/Posts"; // Import the Threads component from _components
+import Posts from "~/app/_components/Posts";
 
 export const dynamic = "force-dynamic";
 
 export default function Home() {
   return (
     <HydrateClient>
-      <main className="flex w-full justify-center">
+      <main className="container mx-auto flex flex-col items-center justify-center p-4">
+        {/*TODO: Create Post for joined thread.*/}
+        {/*<div>*/}
+        {/*  <Button>Post</Button>*/}
+        {/*</div>*/}
         <div className="w-full max-w-7xl">
           <Posts />
         </div>

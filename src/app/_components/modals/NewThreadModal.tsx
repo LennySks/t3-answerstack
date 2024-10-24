@@ -227,6 +227,8 @@ export default function NewThreadModal() {
                         <Image
                           src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp"
                           alt="Shoes"
+                          width={400}
+                          height={300}
                         />
                       </figure>
                       <div className="card-body">
