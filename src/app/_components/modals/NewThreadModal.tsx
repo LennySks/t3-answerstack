@@ -58,7 +58,7 @@ export default function NewThreadModal() {
     await createThreadAction(form.getValues())
       .then(async () => {
         toast.success("Thread created successfully!");
-        await queryClient.invalidateQueries({ queryKey: ["threads"] }); // Invalidate the queries related to threads
+        await queryClient.invalidateQueries({ queryKey: ["threads"] }); // Invalidate the queries related to thread
         handleClearInputs();
       })
       .catch(() => {

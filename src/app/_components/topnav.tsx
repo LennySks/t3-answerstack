@@ -13,6 +13,7 @@ import { Search } from "lucide-react";
 import { Button } from "~/components/ui/button";
 import Link from "next/link";
 import { useEffect } from "react";
+import PlusSvg from "~/assets/PlusSvg";
 export function TopNav() {
   const router = useRouter();
 
@@ -68,13 +69,20 @@ export function TopNav() {
           </SignInButton>
         </SignedOut>
         <SignedIn>
-          <UploadButton
-            endpoint="imageUploader"
-            onClientUploadComplete={() => {
-              router.refresh();
-            }}
-          />
-          <UserButton />
+          <div className="flex gap-4">
+            {/*<UploadButton*/}
+            {/*  endpoint="imageUploader"*/}
+            {/*  onClientUploadComplete={() => {*/}
+            {/*    router.refresh();*/}
+            {/*  }}*/}
+            {/*/>*/}
+            <Button type="button" variant="secondary">
+              <div className="flex items-center gap-1">
+                <PlusSvg color="black" size={18} /> Create Post
+              </div>
+            </Button>
+            <UserButton />
+          </div>
         </SignedIn>
       </div>
     </nav>

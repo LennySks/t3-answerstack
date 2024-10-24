@@ -1,4 +1,4 @@
-// src/server/trpc/router/threads.ts
+// src/server/trpc/router/thread.ts
 import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
 import { z } from "zod";
 import { type CreateThread } from "~/server/dto/CreateThread";
@@ -40,10 +40,4 @@ export const threadsRouter = createTRPCRouter({
 
       return db.insert(threads).values(newThread);
     }),
-});
-
-export const postsRouter = createTRPCRouter({
-  getPosts: publicProcedure.query(() => {
-    return db.query.posts.findMany();
-  }),
 });

@@ -2,11 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { api } from "~/trpc/server";
 
-// Helper function to simulate delay
-
 export default async function SidebarThreads() {
-  // Add a 10-second delay before calling the API
-
   const threads = await api.threads.getThreads();
 
   if (!threads || threads.length === 0) {
@@ -33,4 +29,8 @@ export default async function SidebarThreads() {
       ))}
     </>
   );
+}
+
+function reformatThreadName(input: string): string {
+  return input.toLowerCase().replace(/ /g, "_");
 }
