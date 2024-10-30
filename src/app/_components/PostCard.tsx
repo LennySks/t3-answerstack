@@ -1,26 +1,24 @@
-import { ArrowBigDown, ArrowBigUp, MessageSquare, Share } from "lucide-react";
+"use client";
+
+import { ArrowBigDown, ArrowBigUp } from "lucide-react";
 import { Card, CardContent, CardFooter } from "~/components/ui/card";
 import { Button } from "~/components/ui/button";
 import Image from "next/image";
 import { type Post } from "~/app/models/Post";
-// import { type Comment } from "~/app/models/Comment";
 import { type Thread } from "~/app/models/Thread";
-import { Avatar, AvatarImage, AvatarFallback } from "@radix-ui/react-avatar";
-import { commentsData, PostComments } from "./PostComments";
 
-interface ThreadPostCardProps {
+interface PostCardProps {
   post: Post;
   voteCount: number;
-  comments: Comment[];
-  thread: Thread;
+  threads: Thread[];
 }
 
-export default function ThreadPostCard({
+export default function PostCard({
   post,
   voteCount = 120,
-  comments = [],
-  thread,
-}: ThreadPostCardProps) {
+  threads,
+}: PostCardProps) {
+  const thread = threads.find((t) => t.id === post.threadId);
   return (
     <Card className="mx-auto max-w-2xl">
       <CardContent className="p-4">
@@ -51,7 +49,7 @@ export default function ThreadPostCard({
                 width={24}
                 height={24}
               />
-              <span className="mr-2 text-sm font-medium">{thread.name}</span>
+              <span className="mr-2 text-sm font-medium">{thread?.name}</span>
               <span className="text-xs text-gray-500 dark:text-gray-400">
                 • {post.createdAt.toDateString()}
               </span>
@@ -80,26 +78,10 @@ export default function ThreadPostCard({
           size="sm"
           className="text-gray-600 dark:text-gray-300"
         >
-          <MessageSquare className="mr-2 h-4 w-4" />
-          {comments.length} Comments
-        </Button>
-
-        <Button
-          variant="ghost"
-          size="sm"
-          className="text-gray-600 dark:text-gray-300"
-        >
-          <Share className="mr-2 h-4 w-4" />
-          Share
+          <ArrowBigUp className="mr-2 h-4 w-4" />
+          {voteCount} Votes
         </Button>
       </CardFooter>
-      {/* Comments section */}
-      <div className="bg-gray-100 px-4 py-4 dark:bg-gray-900">
-        <h3 className="mb-4 text-lg font-semibold">Comments</h3>
-        {commentsData.map((comment) => (
-          <PostComments key={comment.id} comment={comment} />
-        ))}
-      </div>
     </Card>
   );
 }

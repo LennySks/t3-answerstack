@@ -6,56 +6,57 @@
 - [x] Scaffold basic ui with mock data
 - [x] Tidy up build process
 - [x] Setup DB (vercel postgres)
-    - [x] Adjust tables to fit the app
-        - [x] Fix relationships between entities (one to one, one to many, many to many)
-        - [x] Add constraints (not null, unique, foreign key)
+  - [x] Adjust tables to fit the app
+    - [x] Fix relationships between entities (one to one, one to many, many to many)
+    - [x] Add constraints (not null, unique, foreign key)
 - [x] Attach DB to UI
 - [x] Add Authentication (w/ Clerk) _(Will add another authentication method like nextauth)_
-    - [ ] Save user to own DB
-        - [x] Sign up user (w/ Clerk)
-        - [x] Fetch the signed up user (User Id from Clerk)
-        - [x] Save user to own DB
-        - [ ] (Optional) After sign up, redirect to profile completion where user can choose profile picture, username
+  - [ ] Save user to own DB
+    - [x] Sign up user (w/ Clerk)
+    - [x] Fetch the signed up user (User Id from Clerk)
+    - [x] Save user to own DB
+    - [ ] (Optional) After sign up, redirect to profile completion where user can choose profile picture, username
           etc.
 - [x] Add Image Upload
 - [ ] "taint" (Server only) _not needed_
 - [x] Use Next/Image component
 - [x] Error management (w/ Sentry)
 - [x] Fetching (State management)
-    - [x] Fetch threads and use globally
-        - [x] Use in sidebar
-    - [x] Fetch posts on main page
+  - [x] Fetch threads and use globally
+    - [x] Use in sidebar
+  - [x] Fetch posts on main page
 - [ ] CRUD
-    - [ ] Thread
-        - [x] Create
-        - [ ] Delete (Archiving)
-        - [ ] Update
-    - [ ] User
-        - [x] Create (Get id from clerk and create user afterwards)
-        - [ ] Delete (Probably not a good idea, stick to deactivating/archiving)
-        - [ ] Update
-    - [ ] ThreadMember
-        - [ ] Create (When becoming a part of a thread)
-        - [ ] Delete (When leaving a thread)
-    - [ ] Post
-        - [ ] Visibility (Optional)
-        - [ ] Create
-        - [ ] Delete
-        - [ ] Update
-    - [ ] Comment
-        - [ ] Create
-            - [ ] Comment on post
-            - [ ] Reply on comment
-    - [ ] PostVotes
-        - [ ] Upvote a post
-        - [ ] Downvote a post
-        - [ ] Remove upvote/downvote (update)
-    - [ ] CommentVotes
-        - [ ] Upvote a comment
-        - [ ] Downvote a comment
-        - [ ] Remove upvote/downvote (update)
+  - [ ] Thread
+    - [x] Create
+    - [ ] Delete (Archiving)
+    - [ ] Update
+  - [ ] User
+    - [x] Create (Get id from clerk and create user afterwards)
+    - [ ] Delete (Probably not a good idea, stick to deactivating/archiving)
+    - [ ] Update
+  - [ ] ThreadMember
+    - [ ] Create (When becoming a part of a thread)
+    - [ ] Delete (When leaving a thread)
+  - [ ] Post
+    - [x] Read
+    - [ ] Visibility (Optional)
+    - [ ] Create
+    - [ ] Delete
+    - [ ] Update
+  - [ ] Comment
+    - [ ] Create
+      - [ ] Comment on post
+      - [ ] Reply on comment
+  - [ ] PostVotes
+    - [ ] Upvote a post
+    - [ ] Downvote a post
+    - [ ] Remove upvote/downvote (update)
+  - [ ] CommentVotes
+    - [ ] Upvote a comment
+    - [ ] Downvote a comment
+    - [ ] Remove upvote/downvote (update)
 - [x] Analytics (posthog)
 - [ ] Ratelimiting (upstash)
-    - Id
-    - PostId
-    - FlairId
+  - Id
+  - PostId
+  - FlairId

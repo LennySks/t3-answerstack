@@ -22,9 +22,9 @@ export default function SidebarThreads({ threads }: { threads: Thread[] }) {
     <>
       {threadsStore.map((thread) => (
         <Link
-          onClick={() => {
-            useThreadsStore.setState({ selectedThread: thread });
-          }}
+          // onClick={() => {
+          //   useThreadsStore.setState({ selectedThread: thread });
+          // }}
           key={thread.id}
           href={`/thread/${thread.id}`}
           className="flex items-center space-x-2 rounded p-2 text-sm transition-colors hover:bg-accent hover:text-accent-foreground"

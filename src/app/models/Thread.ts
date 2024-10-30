@@ -1,4 +1,4 @@
-import { Visibility } from "~/app/models/Visibility";
+import { type Visibility } from "~/app/models/Visibility";
 
 export interface Thread {
   id: number;
