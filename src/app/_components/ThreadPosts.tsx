@@ -3,11 +3,11 @@
 import { api } from "~/trpc/server";
 
 interface ThreadPostsProps {
-  threadId: number;
+  threadId: string;
 }
 
 export async function ThreadPosts({ threadId }: ThreadPostsProps) {
-  const posts = await api.posts.getPostsFromThreadId({ threadId });
+  const posts = await api.posts.getPostsFromThreadId(threadId);
 
   if (!posts || posts.length === 0) {
     return <div>No posts!</div>;

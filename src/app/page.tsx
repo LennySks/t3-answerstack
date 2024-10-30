@@ -1,5 +1,5 @@
-import { HydrateClient } from "~/trpc/server";
 import Posts from "~/app/_components/Posts";
+import { HydrateClient } from "~/trpc/server";
 
 export const dynamic = "force-dynamic";
 

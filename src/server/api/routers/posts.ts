@@ -8,13 +8,12 @@ export const postsRouter = createTRPCRouter({
   }),
 
   getPostsFromThreadId: publicProcedure
-    .input(z.object({ threadId: z.number() }))
+    .input(z.string())
     .query(async ({ input }) => {
       try {
-        const posts = await db.query.posts.findMany({
-          where: (model, { eq }) => eq(model.threadId, input.threadId),
+        return await db.query.posts.findMany({
+          where: (model, { eq }) => eq(model.threadId, Number(input)),
         });
-        return posts;
       } catch (error) {
         console.error("Error fetching posts:", error);
         throw new Error("Could not fetch posts for this thread");
