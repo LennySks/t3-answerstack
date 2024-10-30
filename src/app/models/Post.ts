@@ -3,10 +3,10 @@ export interface Post {
   threadId: number;
   title: string;
   content: string;
-  image?: string[];
-  authorId: string;
+  image?: string | null;
+  authorId: string | null;
   createdAt: Date;
-  updatedAt: Date;
+  updatedAt: Date | null;
   // VoteCount
   // Visibility
   // Comments

@@ -42,7 +42,7 @@ export default function NewThreadModal() {
       description: "",
       image: "",
       banner: "",
-      visibility: Visibility.PUBLIC,
+      visibility: Visibility.Public,
     },
   });
 
@@ -144,7 +144,7 @@ export default function NewThreadModal() {
                           <FormLabel>Thread Visibility</FormLabel>
                           <FormControl>
                             <RadioGroup
-                              value={field.value ?? Visibility.PUBLIC}
+                              value={field.value ?? Visibility.Public}
                               onValueChange={field.onChange}
                               className="flex flex-col space-y-1"
                             >

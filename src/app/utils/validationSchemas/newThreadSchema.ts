@@ -7,5 +7,5 @@ export const newThreadSchema = z.object({
   description: z.string().min(10, "Description must be at least 10 characters"),
   image: z.string().optional(),
   banner: z.string().optional(),
-  visibility: z.enum([Visibility.PUBLIC, Visibility.PRIVATE]),
+  visibility: z.enum([Visibility.Public, Visibility.PRIVATE]),
 });

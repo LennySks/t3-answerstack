@@ -26,7 +26,7 @@ export const threadsRouter = createTRPCRouter({
         description: z.string().min(3).max(500),
         image: z.string().optional(),
         banner: z.string().optional(),
-        visibility: z.enum([Visibility.PUBLIC, Visibility.PRIVATE]),
+        visibility: z.enum([Visibility.Public, Visibility.Private]),
       }),
     )
     .mutation(async ({ input }) => {

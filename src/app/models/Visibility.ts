@@ -1,6 +1,6 @@
 export enum Visibility {
-  PUBLIC = "Public",
-  PRIVATE = "Private",
-  HIDDEN = "Hidden",
-  ARCHIVED = "Archived",
+  Public = "Public",
+  Private = "Private",
+  Hidden = "Hidden",
+  Archived = "Archived",
 }

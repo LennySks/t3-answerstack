@@ -1,12 +1,15 @@
 "use server";
 
 import { api } from "~/trpc/server";
+import ThreadPostCard from "~/app/_components/ThreadPostCard";
+import { type Thread } from "../models/Thread";
 
 interface ThreadPostsProps {
+  thread: Thread;
   threadId: string;
 }
 
-export async function ThreadPosts({ threadId }: ThreadPostsProps) {
+export async function ThreadPosts({ thread, threadId }: ThreadPostsProps) {
   const posts = await api.posts.getPostsFromThreadId(threadId);
 
   if (!posts || posts.length === 0) {
@@ -17,9 +20,12 @@ export async function ThreadPosts({ threadId }: ThreadPostsProps) {
     <div>
       {posts.map((post) => (
         <div key={post.id}>
-          <h2>{post.title}</h2>
-          <p>{post.content}</p>
-          <p>{post.createdAt.toString()}</p>
+          <ThreadPostCard
+            post={post}
+            thread={thread}
+            comments={[]}
+            voteCount={120}
+          />
         </div>
       ))}
     </div>

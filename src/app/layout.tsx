@@ -11,6 +11,7 @@ import { CSPostHogProvider } from "./_analytics/provider";
 import { Toaster } from "sonner";
 import SidebarThreads from "./_components/SidebarThreads";
 import { TRPCReactProvider } from "~/trpc/react";
+import { LayoutComponent } from "~/app/_components/LayoutComponent";
 
 export const metadata: Metadata = {
   title: "Answerstack",
@@ -29,16 +30,7 @@ export default function RootLayout({
         <CSPostHogProvider>
           <html lang="en" className={`${GeistSans.variable}`}>
             <body className="flex min-h-screen flex-col bg-background">
-              <TopNav />
-              <div className="flex flex-grow">
-                <aside className="w-64 flex-shrink-0 border-r border-border p-4">
-                  <Sidebar>
-                    <SidebarThreads />
-                  </Sidebar>
-                </aside>
-                <main className="flex-grow p-4">{children}</main>
-                <Toaster richColors />
-              </div>
+              <LayoutComponent>{children}</LayoutComponent>
             </body>
           </html>
         </CSPostHogProvider>

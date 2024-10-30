@@ -1,16 +1,17 @@
 import { create } from "zustand";
 import { type Thread } from "./app/models/Thread";
-import { api } from "./trpc/server";
 
 type ThreadsState = {
   threads: Thread[];
-  setThreads: () => Promise<void>;
+  selectedThread: Thread | null;
+  initializeThreads: (initialThreads: Thread[]) => void;
+  // setSelectedThread: (threadId: number) => void;
 };
 
 export const useThreadsStore = create<ThreadsState>((set) => ({
   threads: [],
-  setThreads: async () => {
-    const response = (await api.threads.getThreads()) as Thread[];
-    set({ threads: response });
-  },
+  selectedThread: null,
+  initializeThreads: (initialThreads: Thread[]) =>
+    set({ threads: initialThreads }),
+  // setSelectedThread: (threadId: number) => set({ selectedThread: threadId }),
 }));
