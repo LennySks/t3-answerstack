@@ -1,5 +1,5 @@
 # T3 answerstack
-
+Reddit-like platform developed on the T3 Stack from Theo.
 ## TODO
 
 - [x] Make it deploy (vercel)
